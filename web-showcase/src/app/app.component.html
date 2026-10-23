@@ -1,0 +1,345 @@
+<header class="site-header">
+  <a class="brand" href="#top" aria-label="Airline satisfaction research home">
+    <span class="brand-mark" aria-hidden="true">AS</span>
+    <span>Research notes <span class="brand-divider">/</span> 2023</span>
+  </a>
+  <nav aria-label="Main navigation">
+    <a href="#dataset">Dataset</a>
+    <a href="#exploration">Exploration</a>
+    <a href="#model">Models</a>
+    <a href="#method">Method</a>
+  </nav>
+</header>
+
+<main id="top">
+  @if (loading) {
+    <section class="notice" aria-live="polite">
+      <span class="spinner" aria-hidden="true"></span>
+      <p>Loading generated research results…</p>
+    </section>
+  } @else if (errorMessage) {
+    <section class="notice notice-error" role="status">
+      <p class="eyebrow">Results unavailable</p>
+      <h1>Analysis has not been generated yet.</h1>
+      <p>{{ errorMessage }}</p>
+      <code>python src/airline_satisfaction/analysis.py</code>
+    </section>
+  } @else if (data) {
+    @if (!data.generated) {
+      <section class="notice">
+        <p class="eyebrow">Research in progress</p>
+        <h1>Analysis results are not generated yet.</h1>
+        <p>Run the documented workflow to populate this site with computed, aggregate results.</p>
+      </section>
+    } @else {
+      <section class="hero section-wrap">
+        <div class="hero-copy">
+          <p class="eyebrow">DATA MINING · RESEARCH REPLICATION</p>
+          <h1>What shapes an airline passenger’s satisfaction?</h1>
+          <p class="hero-intro">
+            A transparent, reproducible exploration of passenger experience, service ratings, delays, and
+            satisfaction—set alongside the limits of the available data.
+          </p>
+          <div class="hero-links">
+            <a class="button button-dark" href="#exploration">Explore the findings <span aria-hidden="true">↓</span></a>
+            <a class="text-link" href="https://doi.org/10.2991/978-94-6463-210-1_43" target="_blank" rel="noreferrer">
+              Read the source paper <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+        <aside class="hero-note">
+          <span class="note-index">01 / REPLICATION NOTE</span>
+          <p>One training file was supplied. The original test CSV and the author's notebook were not.</p>
+          <a href="#limits">See what this means <span aria-hidden="true">→</span></a>
+        </aside>
+        <div class="hero-rule" aria-hidden="true"></div>
+        <div class="hero-meta">
+          <span>Yifei Wang · 2023</span>
+          <span>ECIT 2023 · Atlantis Highlights in Engineering</span>
+          <span>DOI 10.2991/978-94-6463-210-1_43</span>
+        </div>
+      </section>
+
+      <section class="section-wrap section-block" id="dataset">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">01 · DATASET PROFILE</p>
+            <h2>The file we can actually analyze.</h2>
+          </div>
+          <p class="section-intro">A profile of the supplied training split—not the full dataset described in the paper.</p>
+        </div>
+        <div class="stat-grid">
+          <article class="stat-card">
+            <span class="stat-label">Passenger records</span>
+            <strong>{{ data.profile.rows | number }}</strong>
+            <span class="stat-foot">supplied training CSV</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Source columns</span>
+            <strong>{{ data.profile.columns_in_source }}</strong>
+            <span class="stat-foot">including index and passenger ID</span>
+          </article>
+          <article class="stat-card stat-card-accent">
+            <span class="stat-label">Missing arrival delays</span>
+            <strong>{{ data.profile.missing_values['Arrival Delay in Minutes'] | number }}</strong>
+            <span class="stat-foot">imputed inside model training pipelines</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Satisfied passengers</span>
+            <strong>{{ data.profile.class_percentages['satisfied'] | number:'1.1-1' }}%</strong>
+            <span class="stat-foot">{{ data.profile.class_counts['satisfied'] | number }} records</span>
+          </article>
+        </div>
+        <div class="profile-note">
+          <span class="status-dot" aria-hidden="true"></span>
+          <p>
+            Target encoding: <strong>satisfied = positive class (1)</strong>. The index-like field and passenger
+            identifier are excluded from model predictors.
+          </p>
+        </div>
+      </section>
+
+      <section class="section-wrap section-block section-tinted" id="exploration">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">02 · EXPLORATORY ANALYSIS</p>
+            <h2>Patterns, not causal claims.</h2>
+          </div>
+          <p class="section-intro">Charts below are generated directly from the supplied file. Captions describe what each plot shows.</p>
+        </div>
+        <div class="figure-grid">
+          @for (figure of data.figures; track figure.file) {
+            <figure class="figure-card">
+              <img [src]="'assets/figures/' + figure.file" [alt]="figure.caption" loading="lazy">
+              <figcaption><span class="figure-mark" aria-hidden="true">FIG</span>{{ figure.caption }}</figcaption>
+            </figure>
+          }
+        </div>
+      </section>
+
+      <section class="section-wrap section-block">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">03 · GROUP COMPARISONS</p>
+            <h2>Differences between observed groups.</h2>
+          </div>
+          <p class="section-intro">{{ data.statistics.interpretation_note }}</p>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <caption>Welch tests compare group means; Mann–Whitney tests provide a rank-based sensitivity check.</caption>
+            <thead>
+              <tr>
+                <th scope="col">Measure</th>
+                <th scope="col">Not satisfied · mean</th>
+                <th scope="col">Satisfied · mean</th>
+                <th scope="col">Welch p-value</th>
+                <th scope="col">Mann–Whitney p-value</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (comparison of data.statistics.group_comparisons; track comparison.feature) {
+                <tr>
+                  <th scope="row">{{ comparison.feature }}</th>
+                  <td>{{ comparison.neutral_or_dissatisfied_mean | number:'1.2-2' }}</td>
+                  <td>{{ comparison.satisfied_mean | number:'1.2-2' }}</td>
+                  <td>{{ formatPValue(comparison.p_value) }}</td>
+                  <td>{{ formatPValue(comparison.mann_whitney_p_value) }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        <div class="table-scroll categorical-test-table">
+          <table>
+            <caption>Pearson chi-square tests of association between each passenger category and satisfaction.</caption>
+            <thead>
+              <tr>
+                <th scope="col">Passenger category</th>
+                <th scope="col">Chi-square</th>
+                <th scope="col">Degrees of freedom</th>
+                <th scope="col">p-value</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (entry of data.statistics.categorical_cross_tabs | keyvalue; track entry.key) {
+                <tr>
+                  <th scope="row">{{ entry.key }}</th>
+                  <td>{{ entry.value.chi_square_test.statistic | number:'1.2-2' }}</td>
+                  <td>{{ entry.value.chi_square_test.degrees_of_freedom }}</td>
+                  <td>{{ formatPValue(entry.value.chi_square_test.p_value) }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section-wrap section-block section-dark" id="model">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">04 · PREDICTIVE MODELS</p>
+            <h2>Measured on a holdout from the available file.</h2>
+          </div>
+          <p class="section-intro">
+            {{ data.modeling.evaluation_protocol.holdout }}. This is not the missing official test set.
+          </p>
+        </div>
+        <p class="model-callout">
+          <span class="callout-tag">EVALUATION PROTOCOL</span>
+          {{ data.modeling.evaluation_protocol.training_rows | number }} training rows ·
+          {{ data.modeling.evaluation_protocol.holdout_rows | number }} holdout rows ·
+          stratified · seed {{ data.modeling.evaluation_protocol.random_state }}
+        </p>
+        <div class="table-scroll model-table-wrap">
+          <table class="model-table">
+            <caption>Holdout metrics. Macro averages give both target classes equal weight.</caption>
+            <thead>
+              <tr>
+                <th scope="col">Model</th>
+                <th scope="col">Accuracy</th>
+                <th scope="col">Macro precision</th>
+                <th scope="col">Macro recall</th>
+                <th scope="col">Macro F1</th>
+                <th scope="col">ROC-AUC</th>
+                <th scope="col">3-fold CV accuracy</th>
+                <th scope="col">Satisfied F1</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (model of data.modeling.models; track model.name) {
+                <tr>
+                  <th scope="row">{{ modelTitle(model.name) }}</th>
+                  <td>{{ formatPercent(model.accuracy) }}</td>
+                  <td>{{ formatPercent(model.precision_macro) }}</td>
+                  <td>{{ formatPercent(model.recall_macro) }}</td>
+                  <td>{{ formatPercent(model.f1_macro) }}</td>
+                  <td>{{ model.roc_auc | number:'1.3-3' }}</td>
+                  <td>{{ formatPercent(model.cross_validation.metrics['accuracy'].mean) }}</td>
+                  <td>{{ formatPercent(model.positive_class.f1) }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        <p class="model-footnote">
+          Confusion matrices and ROC curves appear in the exploration figures. The positive class is
+          <strong>{{ data.profile.positive_label }}</strong>; the decision threshold is 0.5.
+        </p>
+      </section>
+
+      <section class="section-wrap section-block" id="factor">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">05 · FACTOR / PCA CHECK</p>
+            <h2>Test the structure before interpreting it.</h2>
+          </div>
+          <p class="section-intro">Suitability diagnostics and PCA use training-partition data. PCA is evaluated as a dimensionality-reduction model; no common-factor prediction score is available.</p>
+        </div>
+        <div class="factor-grid">
+          <article class="factor-card">
+            <span class="stat-label">Kaiser–Meyer–Olkin</span>
+            <strong>{{ data.factor_analysis.overall_kmo | number:'1.3-3' }}</strong>
+            <span class="stat-foot">14 service-rating variables</span>
+          </article>
+          <article class="factor-card">
+            <span class="stat-label">Bartlett sphericity p</span>
+            <strong>{{ formatPValue(data.factor_analysis.bartlett_p_value) }}</strong>
+            <span class="stat-foot">{{ data.factor_analysis.training_rows | number }} training rows</span>
+          </article>
+          <article class="factor-card">
+            <span class="stat-label">First 10 rating PCs</span>
+            <strong>{{ formatPercent(data.factor_analysis.pca_cumulative_variance_first_10) }}</strong>
+            <span class="stat-foot">cumulative variance explained</span>
+          </article>
+          <article class="factor-card">
+            <span class="stat-label">Model PCA · 10 components</span>
+            <strong>{{ formatPercent(data.modeling.pca_summary.cumulative_variance_explained) }}</strong>
+            <span class="stat-foot">encoded predictor matrix; not common-factor analysis</span>
+          </article>
+        </div>
+        <p class="caveat-box">
+          {{ data.factor_analysis.caveat }}
+          {{ data.modeling.common_factor_model_status.reason }}
+        </p>
+      </section>
+
+      <section class="section-wrap section-block section-tinted" id="method">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">06 · REPRODUCIBILITY</p>
+            <h2>A transparent route from CSV to result.</h2>
+          </div>
+          <p class="section-intro">The same Python workflow generates the tables, figures, model metrics, and this site's data payload.</p>
+        </div>
+        <div class="method-grid">
+          <article class="method-card">
+            <span class="step-number">01</span>
+            <h3>Prepare without leakage</h3>
+            <p>Identifiers are excluded. Imputation, scaling, category encoding, PCA, and model fitting stay inside pipelines learned from training data.</p>
+          </article>
+          <article class="method-card">
+            <span class="step-number">02</span>
+            <h3>Compare two models</h3>
+            <p>Logistic regression on the original predictors is compared with a 10-component PCA model using a fixed, stratified holdout.</p>
+          </article>
+          <article class="method-card">
+            <span class="step-number">03</span>
+            <h3>Re-run locally</h3>
+            <p>Install dependencies, run the workflow, then build this static showcase. No backend or passenger-level data is required at runtime.</p>
+            <pre><code>python src/airline_satisfaction/analysis.py
+npm ci
+npm run build</code></pre>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-wrap section-block" id="limits">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">07 · PAPER VS. REPRODUCTION</p>
+            <h2>Context, with boundaries.</h2>
+          </div>
+          <p class="section-intro">Paper values below are reported in the source materials; they are not this workflow's results.</p>
+        </div>
+        <div class="comparison-grid">
+          <article class="comparison-card paper-card">
+            <span class="comparison-label">PAPER-REPORTED · 2023</span>
+            <h3>Wang's study</h3>
+            <dl>
+              <div><dt>Original-variable logistic accuracy</dt><dd>{{ formatPercent(data.modeling.paper_reported_accuracy['original_variables']) }}</dd></div>
+              <div><dt>10-factor logistic accuracy</dt><dd>{{ formatPercent(data.modeling.paper_reported_accuracy['ten_factors']) }}</dd></div>
+              <div><dt>KMO</dt><dd>0.274</dd></div>
+              <div><dt>10-component cumulative variance</dt><dd>≈81.268%</dd></div>
+            </dl>
+          </article>
+          <article class="comparison-card">
+            <span class="comparison-label">INDEPENDENT REPRODUCTION</span>
+            <h3>What differs here</h3>
+            <p>{{ data.modeling.paper_comparison_note }}</p>
+            <ul>
+              <li>The actual 25,976-row test CSV is absent.</li>
+              <li>The paper reports a conditional-forward logistic model; the sensitivity model uses the table's covariates and a different regularized estimator.</li>
+              <li>The tested 10-factor estimator did not converge; the PCA comparison is not common-factor analysis.</li>
+              <li><code>TOTAL</code> sums the 14 service ratings. It does not include the target, but duplicates information in those component inputs, so it is assessed separately.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-wrap citation">
+        <div>
+          <p class="eyebrow">REFERENCE</p>
+          <p>Wang, Y. (2023). “Factors Affect Airline Customers’ Satisfaction: Data Mining.” ECIT 2023, Atlantis Highlights in Engineering, 18, 344–362.</p>
+          <a href="https://doi.org/10.2991/978-94-6463-210-1_43" target="_blank" rel="noreferrer">https://doi.org/10.2991/978-94-6463-210-1_43</a>
+        </div>
+        <span class="citation-mark" aria-hidden="true">AS</span>
+      </section>
+    }
+  }
+</main>
+
+<footer class="site-footer">
+  <span>Airline customer satisfaction · research replication</span>
+  <a href="#top">Back to top ↑</a>
+</footer>

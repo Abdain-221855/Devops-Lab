@@ -1,1 +1,6 @@
-Place the complete original notebook here as `original_notebook.ipynb`. The notebook pasted in chat shows an initial Colab upload and data-loading section, but a complete `.ipynb` attachment was not supplied in this bundle. Keep the original unchanged; create a separate reproducible notebook for cleaned analysis.
+# Notebooks
+
+- `reproduction_analysis.ipynb` is a newly created notebook that runs the reproducible workflow in `src/airline_satisfaction/analysis.py`.
+- The original notebook was not present in the supplied repository. Do not treat the reproduction notebook as the original or overwrite the original if it is later provided.
+
+Install dependencies from the repository root with `python -m pip install -r requirements.txt`, then open the notebook in Jupyter. It writes aggregate outputs to `reports/`.

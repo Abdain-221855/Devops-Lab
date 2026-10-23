@@ -1,0 +1,694 @@
+{
+  "generated": true,
+  "data_scope": "Aggregate analysis of supplied training CSV; no passenger-level records exported.",
+  "profile": {
+    "source_file": "train.csv",
+    "rows": 103904,
+    "columns_in_source": 25,
+    "predictor_count": 22,
+    "target": "satisfaction",
+    "positive_label": "satisfied",
+    "class_counts": {
+      "neutral or dissatisfied": 58879,
+      "satisfied": 45025
+    },
+    "class_percentages": {
+      "neutral or dissatisfied": 56.6667,
+      "satisfied": 43.3333
+    },
+    "missing_values": {
+      "Arrival Delay in Minutes": 310
+    },
+    "duplicate_rows_after_id_columns_removed": 0,
+    "excluded_identifier_columns": [
+      "Unnamed: 0",
+      "id"
+    ],
+    "data_types": {
+      "Gender": "str",
+      "Customer Type": "str",
+      "Age": "int64",
+      "Type of Travel": "str",
+      "Class": "str",
+      "Flight Distance": "int64",
+      "Inflight wifi service": "int64",
+      "Departure/Arrival time convenient": "int64",
+      "Ease of Online booking": "int64",
+      "Gate location": "int64",
+      "Food and drink": "int64",
+      "Online boarding": "int64",
+      "Seat comfort": "int64",
+      "Inflight entertainment": "int64",
+      "On-board service": "int64",
+      "Leg room service": "int64",
+      "Baggage handling": "int64",
+      "Checkin service": "int64",
+      "Inflight service": "int64",
+      "Cleanliness": "int64",
+      "Departure Delay in Minutes": "int64",
+      "Arrival Delay in Minutes": "float64",
+      "satisfaction": "str"
+    },
+    "split": {
+      "method": "stratified holdout from the supplied training CSV",
+      "test_size": 0.2,
+      "random_state": 42,
+      "official_test_file_used": false
+    },
+    "versions": {
+      "python": "3.13.2",
+      "pandas": "3.1.0",
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "scikit_learn": "1.9.1"
+    },
+    "source_shape_including_identifier_columns": [
+      103904,
+      25
+    ]
+  },
+  "statistics": {
+    "group_comparisons": [
+      {
+        "feature": "Age",
+        "test": "Welch independent-samples t-test",
+        "statistic": -46.1415355444016,
+        "p_value": 0.0,
+        "neutral_or_dissatisfied_mean": 37.56668761358039,
+        "satisfied_mean": 41.750583009439204,
+        "neutral_or_dissatisfied_n": 58879,
+        "satisfied_n": 45025,
+        "sensitivity_test": "Mann-Whitney U (two-sided)",
+        "mann_whitney_u": 1098310812.5,
+        "mann_whitney_p_value": 0.0
+      },
+      {
+        "feature": "Flight Distance",
+        "test": "Welch independent-samples t-test",
+        "statistic": -96.4236146804019,
+        "p_value": 0.0,
+        "neutral_or_dissatisfied_mean": 928.9199714669068,
+        "satisfied_mean": 1530.1402554136591,
+        "neutral_or_dissatisfied_n": 58879,
+        "satisfied_n": 45025,
+        "sensitivity_test": "Mann-Whitney U (two-sided)",
+        "mann_whitney_u": 928190637.5,
+        "mann_whitney_p_value": 0.0
+      },
+      {
+        "feature": "Departure Delay in Minutes",
+        "test": "Welch independent-samples t-test",
+        "statistic": 16.57482172560969,
+        "p_value": 1.2767076513247413e-61,
+        "neutral_or_dissatisfied_mean": 16.503727984510608,
+        "satisfied_mean": 12.608084397556913,
+        "neutral_or_dissatisfied_n": 58879,
+        "satisfied_n": 45025,
+        "sensitivity_test": "Mann-Whitney U (two-sided)",
+        "mann_whitney_u": 1420483950.0,
+        "mann_whitney_p_value": 3.153596061795601e-106
+      },
+      {
+        "feature": "Arrival Delay in Minutes",
+        "test": "Welch independent-samples t-test",
+        "statistic": 18.86245399285823,
+        "p_value": 3.1759605263354884e-79,
+        "neutral_or_dissatisfied_mean": 17.12753633064722,
+        "satisfied_mean": 12.630799385259595,
+        "neutral_or_dissatisfied_n": 58697,
+        "satisfied_n": 44897,
+        "sensitivity_test": "Mann-Whitney U (two-sided)",
+        "mann_whitney_u": 1457652440.0,
+        "mann_whitney_p_value": 1.2677777588474121e-229
+      }
+    ],
+    "categorical_cross_tabs": {
+      "Gender": {
+        "counts": {
+          "Female": {
+            "neutral or dissatisfied": 30193,
+            "satisfied": 22534
+          },
+          "Male": {
+            "neutral or dissatisfied": 28686,
+            "satisfied": 22491
+          }
+        },
+        "row_percent": {
+          "Female": {
+            "neutral or dissatisfied": 57.263,
+            "satisfied": 42.737
+          },
+          "Male": {
+            "neutral or dissatisfied": 56.053,
+            "satisfied": 43.947
+          }
+        },
+        "chi_square_test": {
+          "statistic": 15.44441742614322,
+          "degrees_of_freedom": 1,
+          "p_value": 8.496755458033522e-05
+        }
+      },
+      "Customer Type": {
+        "counts": {
+          "Loyal Customer": {
+            "neutral or dissatisfied": 44390,
+            "satisfied": 40533
+          },
+          "disloyal Customer": {
+            "neutral or dissatisfied": 14489,
+            "satisfied": 4492
+          }
+        },
+        "row_percent": {
+          "Loyal Customer": {
+            "neutral or dissatisfied": 52.271,
+            "satisfied": 47.729
+          },
+          "disloyal Customer": {
+            "neutral or dissatisfied": 76.334,
+            "satisfied": 23.666
+          }
+        },
+        "chi_square_test": {
+          "statistic": 3657.2808045981465,
+          "degrees_of_freedom": 1,
+          "p_value": 0.0
+        }
+      },
+      "Type of Travel": {
+        "counts": {
+          "Business travel": {
+            "neutral or dissatisfied": 29909,
+            "satisfied": 41746
+          },
+          "Personal Travel": {
+            "neutral or dissatisfied": 28970,
+            "satisfied": 3279
+          }
+        },
+        "row_percent": {
+          "Business travel": {
+            "neutral or dissatisfied": 41.74,
+            "satisfied": 58.26
+          },
+          "Personal Travel": {
+            "neutral or dissatisfied": 89.832,
+            "satisfied": 10.168
+          }
+        },
+        "chi_square_test": {
+          "statistic": 20945.233826061667,
+          "degrees_of_freedom": 1,
+          "p_value": 0.0
+        }
+      },
+      "Class": {
+        "counts": {
+          "Business": {
+            "neutral or dissatisfied": 15185,
+            "satisfied": 34480
+          },
+          "Eco": {
+            "neutral or dissatisfied": 38044,
+            "satisfied": 8701
+          },
+          "Eco Plus": {
+            "neutral or dissatisfied": 5650,
+            "satisfied": 1844
+          }
+        },
+        "row_percent": {
+          "Business": {
+            "neutral or dissatisfied": 30.575,
+            "satisfied": 69.425
+          },
+          "Eco": {
+            "neutral or dissatisfied": 81.386,
+            "satisfied": 18.614
+          },
+          "Eco Plus": {
+            "neutral or dissatisfied": 75.394,
+            "satisfied": 24.606
+          }
+        },
+        "chi_square_test": {
+          "statistic": 26471.86294449228,
+          "degrees_of_freedom": 2,
+          "p_value": 0.0
+        }
+      }
+    },
+    "interpretation_note": "Associations and unadjusted group differences do not establish causation; large samples can make small differences statistically significant."
+  },
+  "factor_analysis": {
+    "features": [
+      "Inflight wifi service",
+      "Departure/Arrival time convenient",
+      "Ease of Online booking",
+      "Gate location",
+      "Food and drink",
+      "Online boarding",
+      "Seat comfort",
+      "Inflight entertainment",
+      "On-board service",
+      "Leg room service",
+      "Baggage handling",
+      "Checkin service",
+      "Inflight service",
+      "Cleanliness"
+    ],
+    "n_features": 14,
+    "training_rows": 83123,
+    "overall_kmo": 0.7810641901426492,
+    "per_item_kmo": {
+      "Inflight wifi service": 0.7432059914161275,
+      "Departure/Arrival time convenient": 0.7542296218422698,
+      "Ease of Online booking": 0.6816415188631463,
+      "Gate location": 0.7070131401659264,
+      "Food and drink": 0.8406199185780562,
+      "Online boarding": 0.7354093903931856,
+      "Seat comfort": 0.8334798849449254,
+      "Inflight entertainment": 0.7671341836234188,
+      "On-board service": 0.8271878927209545,
+      "Leg room service": 0.8906112016793075,
+      "Baggage handling": 0.815234390062174,
+      "Checkin service": 0.7002919051978853,
+      "Inflight service": 0.7844855971659058,
+      "Cleanliness": 0.8162137582979342
+    },
+    "bartlett_sphericity_chi_square": 482007.4436165637,
+    "bartlett_degrees_of_freedom": 91,
+    "bartlett_p_value": 0.0,
+    "pca_cumulative_variance_first_10": 0.9242186692538424,
+    "pca_components_for_at_least_80_percent_variance": 7,
+    "caveat": "KMO and Bartlett diagnostics are calculated on the training partition and service-rating items only. PCA is not common-factor analysis and is not asserted to reproduce the paper's procedure."
+  },
+  "modeling": {
+    "evaluation_protocol": {
+      "dataset": "supplied train.csv only",
+      "holdout": "20% stratified random holdout",
+      "random_state": 42,
+      "training_rows": 83123,
+      "holdout_rows": 20781,
+      "positive_label": "satisfied",
+      "official_test_set": false
+    },
+    "models": [
+      {
+        "name": "original_features_logistic_regression",
+        "accuracy": 0.8766180645782204,
+        "precision_macro": 0.8756023802555848,
+        "recall_macro": 0.8725292824940251,
+        "f1_macro": 0.8738926668728848,
+        "roc_auc": 0.9280969453111798,
+        "confusion_matrix_labels": [
+          "neutral or dissatisfied",
+          "satisfied"
+        ],
+        "confusion_matrix": [
+          [
+            10636,
+            1140
+          ],
+          [
+            1424,
+            7581
+          ]
+        ],
+        "class_report": {
+          "neutral or dissatisfied": {
+            "precision": 0.8819237147595357,
+            "recall": 0.9031929347826086,
+            "f1-score": 0.8924316160429602,
+            "support": 11776.0
+          },
+          "satisfied": {
+            "precision": 0.869281045751634,
+            "recall": 0.8418656302054415,
+            "f1-score": 0.8553537177028094,
+            "support": 9005.0
+          },
+          "accuracy": 0.8766180645782204,
+          "macro avg": {
+            "precision": 0.8756023802555848,
+            "recall": 0.8725292824940251,
+            "f1-score": 0.8738926668728848,
+            "support": 20781.0
+          },
+          "weighted avg": {
+            "precision": 0.876445285693747,
+            "recall": 0.8766180645782204,
+            "f1-score": 0.8763647051843365,
+            "support": 20781.0
+          }
+        },
+        "positive_class": {
+          "label": "satisfied",
+          "precision": 0.869281045751634,
+          "recall": 0.8418656302054415,
+          "f1": 0.8553537177028094
+        },
+        "cross_validation": {
+          "folds": 3,
+          "random_state": 42,
+          "metrics": {
+            "accuracy": {
+              "mean": 0.875288717566664,
+              "std": 0.0009493211275756723
+            },
+            "precision_macro": {
+              "mean": 0.8746851353697888,
+              "std": 0.0010615453751549148
+            },
+            "recall_macro": {
+              "mean": 0.8706823144907992,
+              "std": 0.0012624547673815956
+            },
+            "f1_macro": {
+              "mean": 0.8723905963982247,
+              "std": 0.0010205528894694142
+            },
+            "roc_auc": {
+              "mean": 0.9266716946255086,
+              "std": 0.0016704539294700434
+            }
+          }
+        }
+      },
+      {
+        "name": "pca_10_logistic_regression",
+        "accuracy": 0.8454838554448776,
+        "precision_macro": 0.844114601448356,
+        "recall_macro": 0.8401716692341815,
+        "f1_macro": 0.8418359043553156,
+        "roc_auc": 0.9065147419609878,
+        "confusion_matrix_labels": [
+          "neutral or dissatisfied",
+          "satisfied"
+        ],
+        "confusion_matrix": [
+          [
+            10363,
+            1413
+          ],
+          [
+            1798,
+            7207
+          ]
+        ],
+        "class_report": {
+          "neutral or dissatisfied": {
+            "precision": 0.8521503165858071,
+            "recall": 0.8800101902173914,
+            "f1-score": 0.8658562058737519,
+            "support": 11776.0
+          },
+          "satisfied": {
+            "precision": 0.8360788863109049,
+            "recall": 0.8003331482509717,
+            "f1-score": 0.8178156028368795,
+            "support": 9005.0
+          },
+          "accuracy": 0.8454838554448776,
+          "macro avg": {
+            "precision": 0.844114601448356,
+            "recall": 0.8401716692341815,
+            "f1-score": 0.8418359043553156,
+            "support": 20781.0
+          },
+          "weighted avg": {
+            "precision": 0.8451861074704857,
+            "recall": 0.8454838554448776,
+            "f1-score": 0.8450388424000481,
+            "support": 20781.0
+          }
+        },
+        "positive_class": {
+          "label": "satisfied",
+          "precision": 0.8360788863109049,
+          "recall": 0.8003331482509717,
+          "f1": 0.8178156028368795
+        },
+        "cross_validation": {
+          "folds": 3,
+          "random_state": 42,
+          "metrics": {
+            "accuracy": {
+              "mean": 0.844481458090275,
+              "std": 0.0013596904181012674
+            },
+            "precision_macro": {
+              "mean": 0.8431415792403311,
+              "std": 0.0015167446684290567
+            },
+            "recall_macro": {
+              "mean": 0.8391410249718881,
+              "std": 0.0017438428341531042
+            },
+            "f1_macro": {
+              "mean": 0.8408000787996225,
+              "std": 0.0014607201249603398
+            },
+            "roc_auc": {
+              "mean": 0.9058375292256047,
+              "std": 0.0021539714122994257
+            }
+          }
+        }
+      },
+      {
+        "name": "paper_table_feature_sensitivity_with_TOTAL",
+        "accuracy": 0.8770992733747173,
+        "precision_macro": 0.8761178146592423,
+        "recall_macro": 0.872993071293424,
+        "f1_macro": 0.8743772338859144,
+        "roc_auc": 0.9280968981604423,
+        "confusion_matrix_labels": [
+          "neutral or dissatisfied",
+          "satisfied"
+        ],
+        "confusion_matrix": [
+          [
+            10643,
+            1133
+          ],
+          [
+            1421,
+            7584
+          ]
+        ],
+        "class_report": {
+          "neutral or dissatisfied": {
+            "precision": 0.8822115384615384,
+            "recall": 0.9037873641304348,
+            "f1-score": 0.8928691275167785,
+            "support": 11776.0
+          },
+          "satisfied": {
+            "precision": 0.8700240908569462,
+            "recall": 0.8421987784564131,
+            "f1-score": 0.8558853402550503,
+            "support": 9005.0
+          },
+          "accuracy": 0.8770992733747173,
+          "macro avg": {
+            "precision": 0.8761178146592423,
+            "recall": 0.872993071293424,
+            "f1-score": 0.8743772338859144,
+            "support": 20781.0
+          },
+          "weighted avg": {
+            "precision": 0.876930369813285,
+            "recall": 0.8770992733747173,
+            "f1-score": 0.8768429976726004,
+            "support": 20781.0
+          }
+        },
+        "positive_class": {
+          "label": "satisfied",
+          "precision": 0.8700240908569462,
+          "recall": 0.8421987784564131,
+          "f1": 0.8558853402550503
+        },
+        "cross_validation": {
+          "folds": 3,
+          "random_state": 42,
+          "metrics": {
+            "accuracy": {
+              "mean": 0.8752405950197204,
+              "std": 0.001062138722043868
+            },
+            "precision_macro": {
+              "mean": 0.8746206356445106,
+              "std": 0.0011730985983161228
+            },
+            "recall_macro": {
+              "mean": 0.8706476964833114,
+              "std": 0.001323584791366361
+            },
+            "f1_macro": {
+              "mean": 0.8723457429989229,
+              "std": 0.001124455142487369
+            },
+            "roc_auc": {
+              "mean": 0.9266848703209097,
+              "std": 0.0016634421631363278
+            }
+          }
+        }
+      }
+    ],
+    "pca_summary": {
+      "components": 10,
+      "cumulative_variance_explained": 0.8128817441961055,
+      "label": "PCA-based logistic model (not common-factor analysis)"
+    },
+    "common_factor_model_status": {
+      "generated": false,
+      "reason": "A training-only 10-factor scikit-learn FactorAnalysis fit on the 14 rating items did not converge after 100 iterations at tolerance 0.1 on the full 83,123-row training partition. No factor-model prediction metrics are reported; PCA is used for the reduced-model comparison."
+    },
+    "paper_reported_accuracy": {
+      "original_variables": 0.875,
+      "ten_factors": 0.85
+    },
+    "paper_table_sensitivity_features": [
+      "Gender",
+      "Customer Type",
+      "Type of Travel",
+      "Class",
+      "Age",
+      "Departure Delay in Minutes",
+      "Arrival Delay in Minutes",
+      "Inflight wifi service",
+      "Departure/Arrival time convenient",
+      "Ease of Online booking",
+      "Gate location",
+      "Food and drink",
+      "Online boarding",
+      "On-board service",
+      "Leg room service",
+      "Baggage handling",
+      "Checkin service",
+      "Inflight service",
+      "Cleanliness",
+      "TOTAL"
+    ],
+    "total_definition": {
+      "feature": "TOTAL",
+      "items_summed": [
+        "Inflight wifi service",
+        "Departure/Arrival time convenient",
+        "Ease of Online booking",
+        "Gate location",
+        "Food and drink",
+        "Online boarding",
+        "Seat comfort",
+        "Inflight entertainment",
+        "On-board service",
+        "Leg room service",
+        "Baggage handling",
+        "Checkin service",
+        "Inflight service",
+        "Cleanliness"
+      ],
+      "interpretation": "Deterministic sum of the 14 supplied ordinal service-rating items; satisfaction target is not included.",
+      "leakage_assessment": "No direct target leakage because the target label is not an input to the sum. It is redundant with its component ratings, so the primary leakage-safe baseline excludes it; a separate paper-table feature sensitivity model includes it."
+    },
+    "paper_comparison_note": "The paper's table includes TOTAL and uses a conditional-forward logistic regression; the sensitivity model uses the table-listed covariates with a stratified holdout and regularized scikit-learn logistic regression, so its performance is not an exact replication.",
+    "top_coefficients": [
+      {
+        "feature": "Type of Travel_Personal Travel",
+        "coefficient": -1.6707472311741915
+      },
+      {
+        "feature": "Customer Type_disloyal Customer",
+        "coefficient": -1.3429517378460245
+      },
+      {
+        "feature": "Type of Travel_Business travel",
+        "coefficient": 1.0326554188817216
+      },
+      {
+        "feature": "Online boarding",
+        "coefficient": 0.8187801122538629
+      },
+      {
+        "feature": "Customer Type_Loyal Customer",
+        "coefficient": 0.7048599255535527
+      },
+      {
+        "feature": "Class_Eco Plus",
+        "coefficient": -0.5510922904190505
+      },
+      {
+        "feature": "Inflight wifi service",
+        "coefficient": 0.5294658592342079
+      },
+      {
+        "feature": "Class_Eco",
+        "coefficient": -0.416893912037743
+      },
+      {
+        "feature": "Checkin service",
+        "coefficient": 0.41192020689747766
+      },
+      {
+        "feature": "On-board service",
+        "coefficient": 0.37951304745512926
+      },
+      {
+        "feature": "Arrival Delay in Minutes",
+        "coefficient": -0.3529578059530191
+      },
+      {
+        "feature": "Leg room service",
+        "coefficient": 0.3361215987307395
+      }
+    ],
+    "coefficient_caveat": "Coefficients describe conditional associations in the primary original-feature model, not causal effects; standardized inputs and one-hot reference categories affect their scale and interpretation."
+  },
+  "figures": [
+    {
+      "file": "class_balance.png",
+      "caption": "Satisfaction class counts in the supplied training file."
+    },
+    {
+      "file": "missing_values.png",
+      "caption": "Missing-value counts in the supplied training file."
+    },
+    {
+      "file": "age_distribution.png",
+      "caption": "Passenger age distribution."
+    },
+    {
+      "file": "flight_distance_distribution.png",
+      "caption": "Flight-distance distribution."
+    },
+    {
+      "file": "satisfaction_by_groups.png",
+      "caption": "Within-group satisfaction composition by passenger category."
+    },
+    {
+      "file": "feature_correlation_matrix.png",
+      "caption": "Spearman correlation matrix for numeric passenger, service-rating, and delay variables."
+    },
+    {
+      "file": "service_rating_correlations.png",
+      "caption": "Spearman correlations among service-rating items."
+    },
+    {
+      "file": "delay_distributions_and_satisfaction.png",
+      "caption": "Delay distributions and delay values by observed satisfaction label."
+    },
+    {
+      "file": "confusion_matrices.png",
+      "caption": "Holdout confusion matrices for all three fitted models."
+    },
+    {
+      "file": "roc_curves.png",
+      "caption": "Holdout ROC curves for all three fitted models."
+    }
+  ]
+}

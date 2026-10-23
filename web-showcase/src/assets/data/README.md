@@ -1,0 +1,1 @@
+The analysis workflow generates `analysis.json` here from aggregate results in `reports/tables/site_data.json`. Run the Python workflow before building the showcase; the app provides an explicit empty/error state until generated data are available.

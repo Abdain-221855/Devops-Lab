@@ -2,6 +2,12 @@
 
 This project analyzes the supplied airline satisfaction training CSV alongside Yifei Wang's 2023 paper, “Factors Affect Airline Customers’ Satisfaction: Data Mining” ([DOI](https://doi.org/10.2991/978-94-6463-210-1_43)). Paper-reported results are distinguished from independently computed results throughout.
 
+## Live website
+
+- **Intended GitHub Pages URL:** https://abdain-221855.github.io/Devops-Lab/
+- **Deployment status:** The Angular production build succeeded in GitHub Actions, but the Pages deployment step currently fails because GitHub Pages is not enabled for this repository. Enable it in [Repository Settings → Pages](https://github.com/Abdain-221855/Devops-Lab/settings/pages), select **GitHub Actions** as the build and deployment source, and rerun the workflow. Do not consider the URL live until a deployment run succeeds and the page opens in a browser.
+- **Workflow:** [GitHub Actions deployments](https://github.com/Abdain-221855/Devops-Lab/actions/workflows/deploy-pages.yml)
+
 ## Available inputs and caveats
 
 - `data/raw/train.csv`: 103,904 rows × 25 columns; contains 310 missing values in `Arrival Delay in Minutes`.
@@ -39,9 +45,19 @@ Outputs are generated in:
 
 Run the analysis before building the website so its charts and aggregate data are available. The site does not publish passenger-level rows.
 
-## Static showcase
+## Static Angular showcase
 
-The Angular application lives in [`web-showcase/`](web-showcase/README.md). GitHub Pages deployment is configured through the Actions workflow; the project URL is [https://abdain-221855.github.io/Devops-Lab/](https://abdain-221855.github.io/Devops-Lab/). The URL will serve the site after Pages is enabled in repository settings and the deployment workflow succeeds. The site was not yet deployed when this README was updated.
+The Angular application lives in [`web-showcase/`](web-showcase/README.md). The GitHub Actions workflow builds the site and publishes `web-showcase/dist/airline-satisfaction/browser/` when Pages is enabled.
+
+To build locally:
+
+```powershell
+Set-Location web-showcase
+npm install
+npm run build
+```
+
+The Angular workspace configuration was fixed after the first remote build attempt. The latest workflow verified that dependency installation, the Angular production build, and artifact upload succeed. Deployment then failed with GitHub's `404 Not Found` error because Pages is not enabled/configured for the repository.
 
 ## Documentation
 
@@ -49,5 +65,6 @@ The Angular application lives in [`web-showcase/`](web-showcase/README.md). GitH
 - [Methodology](docs/METHODOLOGY.md)
 - [Computed and paper-reported findings](docs/FINDINGS.md)
 - [Data dictionary](docs/DATA_DICTIONARY.md)
+- [Master implementation prompt](CODEX_MASTER_PROMPT.md)
 
-Raw input data are preserved. Review licensing and privacy before publishing derived outputs.
+Raw input data are preserved. Review licensing and privacy before committing raw data or publishing derived outputs.

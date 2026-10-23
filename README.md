@@ -4,8 +4,8 @@ This project analyzes the supplied airline satisfaction training CSV alongside Y
 
 ## Live website
 
-- **Intended GitHub Pages URL:** https://abdain-221855.github.io/Devops-Lab/
-- **Deployment status:** The Angular production build succeeded in GitHub Actions, but the Pages deployment step currently fails because GitHub Pages is not enabled for this repository. Enable it in [Repository Settings → Pages](https://github.com/Abdain-221855/Devops-Lab/settings/pages), select **GitHub Actions** as the build and deployment source, and rerun the workflow. Do not consider the URL live until a deployment run succeeds and the page opens in a browser.
+- **Live GitHub Pages URL:** [https://abdain-221855.github.io/Devops-Lab/](https://abdain-221855.github.io/Devops-Lab/)
+- **Deployment status:** The latest checked Pages workflow completed successfully: dependencies installed, Angular production build passed, and the site deployed. The live page and a focused mobile/navigation smoke test were verified.
 - **Workflow:** [GitHub Actions deployments](https://github.com/Abdain-221855/Devops-Lab/actions/workflows/deploy-pages.yml)
 
 ## Available inputs and caveats
@@ -57,7 +57,7 @@ npm install
 npm run build
 ```
 
-The Angular workspace configuration was fixed after the first remote build attempt. The latest workflow verified that dependency installation, the Angular production build, and artifact upload succeed. Deployment then failed with GitHub's `404 Not Found` error because Pages is not enabled/configured for the repository.
+The latest workflow verified dependency installation, the Angular production build, artifact upload, and Pages deployment. See the [progress report](docs/PROGRESS_REPORT.md) for completed phases and remaining data-dependent or optional work.
 
 ## Documentation
 
@@ -65,6 +65,7 @@ The Angular workspace configuration was fixed after the first remote build attem
 - [Methodology](docs/METHODOLOGY.md)
 - [Computed and paper-reported findings](docs/FINDINGS.md)
 - [Data dictionary](docs/DATA_DICTIONARY.md)
+- [Project progress report](docs/PROGRESS_REPORT.md)
 - [Master implementation prompt](CODEX_MASTER_PROMPT.md)
 
 Raw input data are preserved. Review licensing and privacy before committing raw data or publishing derived outputs.

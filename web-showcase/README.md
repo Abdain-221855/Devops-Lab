@@ -27,7 +27,7 @@ For a local development server, run `npm start` from `web-showcase`. Production 
 
 The Angular build sets a relative base URL (`./`) and uses in-page anchor navigation rather than client-side routes. This avoids assuming a repository slug or custom domain and supports publishing the static output from a project subpath.
 
-The repository's deployment workflow builds the site and publishes `dist/airline-satisfaction/browser/` on pushes to `main`. Enable it in **Repository Settings → Pages → Build and deployment → Source → GitHub Actions**. The configured project URL is [https://abdain-221855.github.io/Devops-Lab/](https://abdain-221855.github.io/Devops-Lab/); it becomes available after Pages is enabled and the first workflow run succeeds.
+The repository's deployment workflow builds the site and publishes `dist/airline-satisfaction/browser/` on pushes to `main`. The live project URL is [https://abdain-221855.github.io/Devops-Lab/](https://abdain-221855.github.io/Devops-Lab/). The production build and deployment completed successfully in [GitHub Actions](https://github.com/Abdain-221855/Devops-Lab/actions/runs/39912297817).
 
 Before publishing, run the Python workflow and verify the generated data and figures are aggregate-only. No raw CSV is copied into the web application.
 

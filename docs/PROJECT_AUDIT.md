@@ -79,6 +79,8 @@ The original-variable regression table lists `TOTAL` and does not list `Flight D
 - [x] Phase B: implement reproducible data-quality inspection and exploratory analysis.
 - [x] Phase C: implement and evaluate leakage-safe models using only available data.
 - [x] Phase D: document computed findings and verify paper comparisons.
-- [x] Phase E: implement the Angular static showcase from generated aggregate outputs; production build verification is blocked by npm registry connectivity.
-- [x] Phase F: compile the Python workflow, run unit tests, regenerate the analysis outputs, execute the notebook, and verify the aggregate website payload matches the generated report.
-- [ ] Angular production build and browser/mobile navigation checks remain blocked: Angular dependencies are not installed, and the previously attempted npm registry access failed. Retry when registry access is available.
+- [x] Phase E: implement and deploy the Angular static showcase from generated aggregate outputs; the production build passed in GitHub Actions and the live GitHub Pages site was verified.
+- [x] Phase F: compile the Python workflow, run unit tests, regenerate the analysis outputs, execute the notebook, verify the aggregate website payload, and confirm the Pages deployment.
+- [x] Verify the live site renders, the Models navigation anchor works, and a 390px mobile viewport has no horizontal overflow.
+
+The initial npm registry issue is resolved for CI: GitHub Actions successfully installed dependencies, built the Angular site, and deployed the Pages artifact. See [PROGRESS_REPORT.md](./PROGRESS_REPORT.md) for current status and remaining optional work.
